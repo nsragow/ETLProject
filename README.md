@@ -18,3 +18,8 @@
 4. Middleware (Chris)
 # Process 
 DarkSky + SQL -> MongoDB
+
+
+
+# Attributions:
+[Powered by Dark Sky](https://darksky.net/poweredby/)
