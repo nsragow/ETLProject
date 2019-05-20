@@ -1,10 +1,10 @@
 #### ETLProject
 
-#Goals:
+# Goals:
   Based off existing SQL database create Document based NoSQL database.
 
-#Out:
-  ##Per Team:
+# Out:
+  ## Per Team:
     1. The name of the team 
     2. The total number of goals scored by the team during the 2011 season
     3. The total number of wins the team earned during the 2011 season
