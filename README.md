@@ -11,3 +11,8 @@
     4. A histogram visualization of the team's wins and losses for the 2011 season (store the visualization directly)
     5. The team's win percentage on days where it was raining during games in the 2011 season.  
   *5: Weather data is not available in the original database. Use DarkSky API to collect it.
+# Tech:
+1. SQL
+2. DarkSky API
+3. MongoDB
+4. Middleware
