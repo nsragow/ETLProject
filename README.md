@@ -12,7 +12,14 @@
 5. The team's win percentage on days where it was raining during games in the 2011 season.  
   *5: Weather data is not available in the original database. Use DarkSky API to collect it.
 # Tech:
-1. SQL
-2. DarkSky API
-3. MongoDB
-4. Middleware
+1. SQL (Noah/Chris)
+2. DarkSky API (Noah)
+3. MongoDB (Noah)
+4. Middleware (Chris)
+# Process 
+DarkSky --v
+          v
+       Middleware
+          v
+          v
+SQL --------> Middleware -------> MongoDB
