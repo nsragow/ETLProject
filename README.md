@@ -17,9 +17,4 @@
 3. MongoDB (Noah)
 4. Middleware (Chris)
 # Process 
-DarkSky --v
-          v
-       Middleware
-          v
-          v
-SQL --------> Middleware -------> MongoDB
+DarkSky + SQL -> MongoDB
