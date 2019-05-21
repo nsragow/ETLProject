@@ -1,28 +1,29 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
 import os
+import io
 #name  2011_wins  2011_losses
 
 
-filename = "file_temp_png_1010101010101010101010101.png"
 
 
 
-def save_win_loss(wins,losses,filename):
+
+def save_win_loss(wins,losses):
     sns.barplot(["wins","losses"],[wins,losses])
-    plt.savefig(filename, bbox_inches='tight')
+    ioO = io.BytesIO()
+    plt.savefig(ioO, bbox_inches='tight')
+    return ioO
 def append_visualizations(df):
-    global filename
     df["visualization_png_binary"] = df.apply(row_to_visualization,axis=1)
-    os.remove(filename)
 def row_to_visualization(row):
-    global filename
-    save_win_loss(row["2011_wins"],row["2011_losses"],filename)
-    file = open(filename,"rb")
+
+    data = save_win_loss(row["2011_wins"],row["2011_losses"])
+    data.seek(0)
     byte = None
     byte_string = b""
     while byte != b"":
-        byte = file.read(1)
+        byte = data.read(1)
         byte_string += byte
-    file.close()
+    data.close()
     return byte_string
