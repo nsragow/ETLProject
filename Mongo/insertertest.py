@@ -7,7 +7,7 @@ for x in range(200):
     for y in range(5):
         row.append("dum_val")
     rows.append(row)
-columns = ["name","2011_wins","visualization","win_rate_on_rainy_days","2011_goals"]
+columns = ["name","2011_wins","visualization_png_binary","win_rate_on_rainy_days","2011_goals"]
 
 df = pd.DataFrame(data=rows,columns=columns)
 

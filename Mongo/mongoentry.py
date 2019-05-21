@@ -18,7 +18,7 @@ class SoccerEntry():
         self.pairs["2011_wins"] = win_count
         return self
     def visualization(self,visualization):
-        self.pairs["visualization"] = visualization
+        self.pairs["visualization_png_binary"] = visualization
         return self
     def win_rate_on_rainy_days(self,win_rate):
         self.pairs["win_rate_on_rainy_days"] = win_rate
@@ -28,7 +28,7 @@ class SoccerEntry():
         return self
     def ready(self):
         status = True
-        for key in ["name","2011_wins","visualization","win_rate_on_rainy_days","2011_goals"]:
+        for key in ["name","2011_wins","visualization_png_binary","win_rate_on_rainy_days","2011_goals"]:
             if key not in self.pairs:
                 status = False
                 break
