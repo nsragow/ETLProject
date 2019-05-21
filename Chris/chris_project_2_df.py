@@ -1,13 +1,14 @@
-print("start")
 import pandas as pd
 import sqlite3
 
+
 def query(c,query):
-    c.execute("""SELECT HomeTeam, sum(FTHG) as HomeGoals FROM Matches WHERE Season == 2011 GROUP BY HomeTeam""")
+    c.execute(query)
     df = pd.DataFrame(c.fetchall())
     df.columns = [x[0] for x in c.description] #home team goals
     return df
 def create_goals(df_home,df_away):
+
     df_goals = pd.concat([df_home, df_away], sort=False, axis=1)
     df_goals['Total_Goals'] = df_goals.HomeGoals + df_goals.AwayGoals
     df_goals.drop(['HomeTeam', 'HomeGoals', 'AwayGoals'], axis=1, inplace=True)
@@ -64,4 +65,3 @@ df_2011['win_rate'] = df_2011['2011_wins']/(df_2011['2011_wins'] + df_2011['2011
 
 df_2011.columns = ['name', '2011_wins', '2011_losses', '2011_goals', 'win_rate']
 print(df_2011.head())
-print("hi")
