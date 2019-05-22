@@ -4,7 +4,19 @@ import sqlite3
 import requests as r
 import json
 
- def data(database):
+
+import sys
+sys.path.append('./DarkSkyAPI')
+
+
+from dailyconditions import TimeMachine
+
+def data(database):
+    '''
+    Params:
+        database:
+            String path to sqlite file
+    '''
     conn = sqlite3.connect(database)
     c = conn.cursor()
 
@@ -21,59 +33,6 @@ def dates_to_integers(dataframe):
     for i in range(len(dates)):
         Dates.append(list(map(int, dates[i]))) #change the dates to integers
 
-class TimeMachine():
-    '''
-    Used to get historical data from Dark Sky API.
-    Specifically draws out the precipitation type per day.
-    Usage:
-        tm = TimeMachine(dark_sky_api_key)
-        response = tm.time_to_label_with_json(some_year,some_month,some_day)
-        #precipitation label#
-        print(response[0])
-        #full JSON#
-        print(response[1])
-    '''
-    lat = 52.520008
-    lon = 13.404954
-    def __init__(self, api_key):
-        self.api_key = api_key
-
-    def time_to_label_with_json(self,year,month,day):
-        day = "{:0>2d}".format(day)
-        month = "{:0>2d}".format(month)
-        year = "{}".format(year)
-
-        time = f"{year}-{month}-{day}T13:00:00"
-
-        https = f"https://api.darksky.net/forecast/{self.api_key}/{self.lat},{self.lon},{time}?exclude=minutely,hourly,flags,currently"
-
-        response = r.get(https)
-
-        response_json = response.json()
-
-        label = None
-        err_msg = None
-        if "daily" in  response_json.keys():
-            #good
-            daily = response_json["daily"]
-            if "data" in daily:
-                data = daily["data"]
-                if len(data) > 0:
-                    target_data = data[0]
-                    if "precipType" in target_data:
-                        label = target_data["precipType"]
-                    else:
-                        label = "none"
-                else:
-                    err_msg = "ERR: data array was empty"
-            else:
-                err_msg = "ERR: data not in daily"
-        else:
-            err_msg = "ERR: 'daily' not in response"
-
-        if err_msg is not None:
-            return err_msg
-        return (label,response_json)
 
 def rain_days(dark_sky_api_key): #returns either 'rain' or 'none' for each date
     rainy_days = []
@@ -83,21 +42,22 @@ def rain_days(dark_sky_api_key): #returns either 'rain' or 'none' for each date
         print(response[0]) #precipitation label
         rainy_days.append(response[0])
 
-germany_df = df
+
 
 def rainy_day_wins(dataframe):
+    germany_df = dataframe
     germany_df['rainy_days'] = rainy_days #adds the rainy_days list created in the previous function to the new data frame
     germany_df['rainy_wins'] = rainy_wins
     team_names = set(germany_df.HomeTeam)
     rainy_wins = np.zeros(306,dtype=int)
 #fills the rainy_wins column with the team that won if the corresponding rain_days column has a value of 'rain' otherwise none
     for i in range(len(germany_df)):
-    if germany_df['FTR'][i] == 'H' and germany_df['rainy_days'][i] == 'rain':
-        germany_df['rainy_wins'][i] = germany_df.HomeTeam[i]
-    if germany_df['FTR'][i] == 'A' and germany_df['rainy_days'][i] == 'rain':
-        germany_df['rainy_wins'][i] = germany_df.AwayTeam[i]
-    else:
-        germany_df['rainy_wins'][i] = None
+        if germany_df['FTR'][i] == 'H' and germany_df['rainy_days'][i] == 'rain':
+            germany_df['rainy_wins'][i] = germany_df.HomeTeam[i]
+        if germany_df['FTR'][i] == 'A' and germany_df['rainy_days'][i] == 'rain':
+            germany_df['rainy_wins'][i] = germany_df.AwayTeam[i]
+        else:
+            germany_df['rainy_wins'][i] = None
 
     germany_dict_list = []
 #for loop returns a list of dictionaries with the keys: 'name', '2011_wins', '2011_losses', '2011_goals', 'win_rate_on_rainy_days'

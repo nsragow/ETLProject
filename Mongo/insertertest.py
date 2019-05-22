@@ -18,7 +18,8 @@ database_collection_name = "aaabbbcccdddeeefff"
 for_the_test = client[database_collection_name]
 for_the_test = for_the_test[database_collection_name]
 insert_soccer_panda_into_mongo_collection(df,for_the_test)
-
+client.drop_database(database_collection_name)
+insert_soccer_panda_into_mongo_collection(df,for_the_test)
 cursor = for_the_test.find({})
 count = 0
 for x in cursor:
