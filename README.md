@@ -1,5 +1,7 @@
 #### ETLProject
 
+Please look at example.py for usage reference
+
 # Goals:
   Based off existing SQL database create Document based NoSQL database.
 
